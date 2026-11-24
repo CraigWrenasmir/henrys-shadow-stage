@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; media-src 'self' blob:; img-src 'self' blob: data:; connect-src 'self' blob:; worker-src 'self' blob:; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="description" content="Turn your dance video into a giant shadow on a backlit stage.">
+  <title>Henry’s Shadow Stage</title>
+  <link rel="stylesheet" href="./style.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <main class="studio">
+    <header class="studio-header">
+      <div>
+        <h1>Henry’s Shadow Stage</h1>
+        <p>Turn your dance into a giant shadow on a backlit curtain.</p>
+      </div>
+      <div class="file-actions">
+        <button type="button" id="choose" class="button primary">Choose a dance video</button>
+        <input type="file" accept="video/*,.mp4,.mov,.m4v,.webm" id="video-file" hidden>
+      </div>
+    </header>
+
+    <section class="composer" aria-label="Stage preview">
+      <div class="screen" id="screen">
+        <canvas id="stage" width="1280" height="720" role="img" aria-label="Backlit curtain and dancer’s shadow"></canvas>
+        <div class="screen-overlay" id="processing" hidden>
+          <div class="task">
+            <strong id="progress-label">Finding your shadow…</strong>
+            <progress id="progress" aria-labelledby="progress-label"></progress>
+            <button type="button" class="button ghost small" id="cancel">Cancel</button>
+          </div>
+        </div>
+        <div class="screen-overlay" id="drop-target" hidden><strong>Drop your dance video here</strong></div>
+      </div>
+
+      <div class="transport">
+        <button id="play" class="button transport-play" type="button">
+          <span class="play-icon" aria-hidden="true"></span>
+          <span id="play-label">Play demo</span>
+        </button>
+        <input type="range" min="0" max="8" step="0.01" value="0" id="timeline" aria-label="Video position">
+        <span id="time-readout" class="time">0:00 / 0:08</span>
+        <button type="button" id="export" class="button export" disabled>Save video</button>
+      </div>
+    </section>
+
+    <section class="controls" aria-label="Stage controls">
+      <fieldset class="control angle">
+        <legend>Camera</legend>
+        <div class="segmented">
+          <input type="radio" name="angle" value="close" id="close" checked>
+          <label for="close">Close-up</label>
+          <input type="radio" name="angle" value="wide" id="wide">
+          <label for="wide">Wide shot</label>
+        </div>
+      </fieldset>
+      <div class="control size">
+        <label for="size">Shadow size</label>
+        <input id="size" type="range" min="0.65" max="1.25" step="0.01" value="1">
+      </div>
+      <div class="control curtain">
+        <span id="cue-label">Curtain cue</span>
+        <div class="cue-actions" role="group" aria-labelledby="cue-label">
+          <button type="button" class="button small ghost" id="set-cue">Drop curtain here</button>
+          <button type="button" class="button small ghost" id="clear-cue" aria-label="Remove curtain cue" hidden>Clear</button>
+          <output id="cue-time" class="cue-time">Off</output>
+        </div>
+      </div>
+      <div class="control sound">
+        <label for="sound">Clip sound</label>
+        <label class="check"><input type="checkbox" id="sound" checked disabled> On</label>
+      </div>
+    </section>
+
+    <p class="message" id="message" hidden></p>
+    <div class="sr-only" id="announcement" role="status"></div>
+
+    <footer>
+      <p>For a crisp shadow, film one dancer from head to toe against a plain, well-lit background.</p>
+      <p>Your video stays on this device.</p>
+      <p class="credit">Demo footage by Vimeo via Pexels. <a href="https://www.pexels.com/video/monochrome-video-of-person-dancing-857070/" target="_blank" rel="noreferrer">Source</a> · <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank" rel="noreferrer">CC0</a></p>
+    </footer>
+  </main>
+</body>
+</html>
